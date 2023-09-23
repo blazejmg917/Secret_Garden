@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class mouseChecker : MonoBehaviour
 {
     [SerializeField, Tooltip("the goal object to be searching for")]private string goalObject = "";
     private bool overGoalObject = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool clicking = false;
+    [System.Serializable] private class CorrectClickEvent : UnityEvent { };
+    [System.Serializable] private class InvalidClickEvent : UnityEvent { };
+    [SerializeField,Tooltip("the event that is called when the correct object is clicked")]private CorrectClickEvent correctClickEvent;
+    [SerializeField, Tooltip("the event that is called when something other than the correct object is clicked")] private InvalidClickEvent invalidClickEvent;
+
 
     // Update is called once per frame
     void Update()
@@ -32,24 +35,33 @@ public class mouseChecker : MonoBehaviour
         }
     }
 
-    public void OnClick()
+    public void OnClick(InputAction.CallbackContext ctx)
     {
-        if (overGoalObject)
+        //Debug.Log("value type: " + ctx.valueType);
+        float currentClick = ctx.ReadValue<float>();
+        if (clicking && currentClick < .5)
         {
-            SuccessfulClick();
+            clicking = false;
         }
-        else
-        {
-            InvalidClick();
+        else if (!clicking && currentClick > .5) { 
+            clicking = true;
+            if (overGoalObject)
+            {
+                SuccessfulClick();
+            }
+            else
+            {
+                InvalidClick();
+            }
         }
     }
     private void SuccessfulClick()
     {
-        Debug.Log("succesful click");
+        correctClickEvent.Invoke();
     }
 
     private void InvalidClick()
     {
-        Debug.Log("invalid click");
+        invalidClickEvent.Invoke();
     }
 }
