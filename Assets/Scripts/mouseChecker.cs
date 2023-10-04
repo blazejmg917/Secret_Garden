@@ -64,4 +64,8 @@ public class mouseChecker : MonoBehaviour
     {
         invalidClickEvent.Invoke();
     }
+
+    public void UpdateGoalObj(string newGoalObj){
+        goalObject = newGoalObj;
+    }
 }

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
         [SerializeField, Tooltip("the index at which they will spawn")]public int gnomeSpawnId;
 
     }
+    [SerializeField, Tooltip("the mouse checker script")]private mouseChecker mouseCheck;
     [Header("health")]
     [SerializeField, Tooltip("the player's max health")]private int maxHealth = 3;
     [SerializeField, Tooltip("the player's current health")]private int currentHealth = 3;
@@ -30,6 +31,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(!mouseCheck){
+            mouseCheck = gameObject.GetComponentInChildren<mouseChecker>();
+        }
         foundGnomes = new List<GameObject>();
         foundObjects = new List<GameObject>();
         currentHealth = maxHealth;
@@ -70,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     public void CorrectObjectClicked(){
         Debug.Log("correct object clicked");
-
+        GetNextObject();
     }
 
     public void GetNextObject(){
@@ -97,7 +101,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         currentObject = hiddenObjects[Random.Range(0,hiddenObjects.Count - 1)];
-
+        mouseCheck.UpdateGoalObj(currentObject.GetComponent<selectableObject>().getId());
 
     }
 
