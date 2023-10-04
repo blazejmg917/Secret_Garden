@@ -10,7 +10,11 @@ public class GameManager : MonoBehaviour
         [SerializeField, Tooltip("the index at which they will spawn")]public int gnomeSpawnId;
 
     }
+    [Header("other scripts")]
+    [SerializeField, Tooltip("the timer script")]private TimerScript timer;
+    [SerializeField, Tooltip("the item name display script")]private ItemDisplayScript itemDisplay;
     [SerializeField, Tooltip("the mouse checker script")]private mouseChecker mouseCheck;
+    [SerializeField, Tooltip("the clicks left script")]private ClicksLeftScript clicksLeft;
     [Header("health")]
     [SerializeField, Tooltip("the player's max health")]private int maxHealth = 3;
     [SerializeField, Tooltip("the player's current health")]private int currentHealth = 3;
@@ -20,9 +24,10 @@ public class GameManager : MonoBehaviour
     [Header("objects")]
     [SerializeField, Tooltip("a list of all of the objects to find")]private List<GameObject> hiddenObjects = new List<GameObject>();
     [SerializeField, Tooltip("a list of all previously found objects")]private List<GameObject> foundObjects = new List<GameObject>();
-
+    
     private GameObject currentObject;
     private int currentObjectIndex;
+    private bool gameOver = false;
     [Header("Gnomes")]
     [SerializeField, Tooltip("whether or not the gnomes show up at fixed intervals")]private bool fixedGnomePoints;
     [SerializeField, Tooltip("if fixedGnomePoints are active, use this list to set up when the gnomes spawn")]private List<gnomeSpawnPoint> fixedGnomeSpawns = new List<gnomeSpawnPoint>();
@@ -54,6 +59,9 @@ public class GameManager : MonoBehaviour
                 gnomeSpawnMap.Add(gnomeSpawn.gnomeSpawnId, gnomeSpawn.gnome);
             }
         }
+        if(clicksLeft){
+            clicksLeft.Display(currentHealth);
+        }
         GetNextObject();
     }
 
@@ -69,15 +77,30 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(gameOver){
+            return;
+        }
+        levelTimer -= Time.deltaTime;
+        if(timer){
+            timer.UpdateTimer(levelTimer);
+        }
+        if(levelTimer < 0 && !gameOver){
+            GameOver();
+        }
     }
 
     public void CorrectObjectClicked(){
+        if(gameOver){
+            return;
+        }
         Debug.Log("correct object clicked");
         GetNextObject();
     }
 
     public void GetNextObject(){
+        if(gameOver){
+            return;
+        }
         if(currentObject){
             if(fixedGnomePoints && currentObject.GetComponent<selectableObject>().GetObjectType() == selectableObject.ObjectType.GNOME){
                 foundGnomes.Add(currentObject);
@@ -102,6 +125,7 @@ public class GameManager : MonoBehaviour
         }
         currentObject = hiddenObjects[Random.Range(0,hiddenObjects.Count - 1)];
         mouseCheck.UpdateGoalObj(currentObject.GetComponent<selectableObject>().getId());
+        itemDisplay.Display(currentObject.GetComponent<selectableObject>().getId());
 
     }
 
@@ -112,11 +136,13 @@ public class GameManager : MonoBehaviour
 
     private void TakeDamage(){
         currentHealth--;
+        clicksLeft.Display(currentHealth);
         if(currentHealth <= 0){
             GameOver();
         }
     }
     private void GameOver(){
+        gameOver = true;
         Debug.Log("Game over >>>>:(((((((");
     }
     private void WinLevel(){
