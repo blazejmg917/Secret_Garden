@@ -27,5 +27,9 @@ public class selectableObject : MonoBehaviour
         return objType;
     }
 
+    public string getId(){
+        return id;
+    }
+
 
 }
