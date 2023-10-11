@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
         [SerializeField, Tooltip("the index at which they will spawn")]public int gnomeSpawnId;
 
     }
+    [SerializeField, Tooltip("the level count")]private int levelNumber = 3;
     [Header("other scripts")]
     [SerializeField, Tooltip("the timer script")]private TimerScript timer;
     [SerializeField, Tooltip("the item name display script")]private ItemDisplayScript itemDisplay;
@@ -238,6 +239,10 @@ public class GameManager : MonoBehaviour
             winCanvas.SetActive(true);
         }
         Invoke("Quit",uiWaitTime);
+
+        if(PlayerPrefs.GetInt("UnlockedLevel", 1) < levelNumber){
+            PlayerPrefs.SetInt("UnlockedLevel",levelNumber);
+        }
     }
 
     public void Quit(){

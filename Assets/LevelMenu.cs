@@ -10,7 +10,7 @@ public class LevelMenu : MonoBehaviour
 
     public void Awake() 
     {
-        int unlockedLevel = PlayerPrefs.GetInt("UnnlockedLevel", 1);
+        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
         for(int i = 0; i < Levels.Length; i++) {
             Levels[i].interactable = false;
         }
