@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         foundObjects = new List<GameObject>();
         currentHealth = maxHealth;
         levelTimer = maxTime;
-        selectableObject[] selectableObjects = FindObjectsOfType<selectableObject>();
+        selectableObject[] selectableObjects = FindObjectsOfType<selectableObject>(true);
         foreach(selectableObject obj in selectableObjects){
             if(!hiddenObjects.Contains(obj.gameObject) && (!fixedGnomePoints || (fixedGnomePoints && obj.GetObjectType() == selectableObject.ObjectType.TOOL))){
                 hiddenObjects.Add(obj.gameObject);
