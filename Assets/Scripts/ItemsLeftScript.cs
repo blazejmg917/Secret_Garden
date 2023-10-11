@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TimerScript : MonoBehaviour
+public class ItemsLeftScript : MonoBehaviour
 {
-    [SerializeField, Tooltip("the text for the timer")]private TMP_Text timerText;
+    [SerializeField, Tooltip("the text")]private TMP_Text text;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +18,7 @@ public class TimerScript : MonoBehaviour
         
     }
 
-    public void UpdateTimer(float time){
-        timerText.text = ((int)time).ToString() + " Seconds Left";
+    public void UpdateObjects(int current, int max){
+        text.text = current.ToString() + "/" + max;
     }
-
 }
