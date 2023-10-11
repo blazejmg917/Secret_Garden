@@ -11,6 +11,11 @@ public class ScreenManager : MonoBehaviour
     [SerializeField]
     private int screenIndex = 0;
 
+    private void OnEnable()
+    {
+        UpdateActiveScreen();
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
