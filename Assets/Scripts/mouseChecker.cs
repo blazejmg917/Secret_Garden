@@ -9,10 +9,12 @@ public class mouseChecker : MonoBehaviour
     [SerializeField, Tooltip("the goal object to be searching for")]private string goalObject = "";
     private bool overGoalObject = false;
     private bool clicking = false;
+    private bool pausing = false;
     [System.Serializable] private class CorrectClickEvent : UnityEvent { };
     [System.Serializable] private class InvalidClickEvent : UnityEvent { };
     [SerializeField,Tooltip("the event that is called when the correct object is clicked")]private CorrectClickEvent correctClickEvent;
     [SerializeField, Tooltip("the event that is called when something other than the correct object is clicked")] private InvalidClickEvent invalidClickEvent;
+    public GameManager gm;
 
 
     // Update is called once per frame
@@ -37,6 +39,9 @@ public class mouseChecker : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext ctx)
     {
+        if(gm.IsPaused()){
+            return;
+        }
         //Debug.Log("value type: " + ctx.valueType);
         float currentClick = ctx.ReadValue<float>();
         if (clicking && currentClick < .5)
@@ -67,5 +72,17 @@ public class mouseChecker : MonoBehaviour
 
     public void UpdateGoalObj(string newGoalObj){
         goalObject = newGoalObj;
+    }
+
+    public void Pause(InputAction.CallbackContext ctx){
+        float currentPause = ctx.ReadValue<float>();
+        if (pausing && currentPause < .5)
+        {
+            pausing = false;
+        }
+        else if (!pausing && currentPause > .5) { 
+            pausing = true;
+            gm.TogglePaused();
+        }
     }
 }
