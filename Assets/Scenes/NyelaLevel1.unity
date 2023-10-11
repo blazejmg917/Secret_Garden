@@ -1821,7 +1821,7 @@ GameObject:
   - component: {fileID: 1144120741}
   - component: {fileID: 1144120740}
   m_Layer: 0
-  m_Name: Fork
+  m_Name: Scissors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1890,9 +1890,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 0
-  id: Fork
+  id: Scissors
   identifiers:
-  - Fork
+  - Scissors
 --- !u!212 &1144120742
 SpriteRenderer:
   m_ObjectHideFlags: 0
