@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     [Header("objects")]
     [SerializeField, Tooltip("a list of all of the objects to find")]private List<GameObject> hiddenObjects = new List<GameObject>();
     [SerializeField, Tooltip("a list of all previously found objects")]private List<GameObject> foundObjects = new List<GameObject>();
+
+    [SerializeField] AudioManager audioManager;
     
     private GameObject currentObject;
     private int currentObjectIndex;
@@ -99,12 +101,14 @@ public class GameManager : MonoBehaviour
 
     public void Pause(){
         isPaused = true;
-        if(pauseCanvas){
+        audioManager.MusicPause();
+        if (pauseCanvas){
             pauseCanvas.SetActive(true);
         }
     }
 
     public void UnPause(){
+        audioManager.MusicUnpause();
         isPaused = false;
         if(pauseCanvas){
             pauseCanvas.SetActive(false);
@@ -113,9 +117,11 @@ public class GameManager : MonoBehaviour
 
     public void TogglePaused(){
         if(isPaused){
+            audioManager.MusicUnpause();
             UnPause();
         }
         else{
+            audioManager.MusicPause();
             Pause();
         }
 
@@ -187,6 +193,7 @@ public class GameManager : MonoBehaviour
 
     public void InvalidClick(){
         Debug.Log("Clicked the wrong thing >:(");
+        audioManager.FXObjectMiss();
         TakeDamage();
     }
 
@@ -199,6 +206,8 @@ public class GameManager : MonoBehaviour
     }
     private void GameOver(){
         gameOver = true;
+        audioManager.MusicPause();
+        audioManager.FXDefeat();
         Debug.Log("Game over >>>>:(((((((");
         if(gameOverCanvas){
             gameOverCanvas.SetActive(true);
@@ -207,6 +216,8 @@ public class GameManager : MonoBehaviour
     }
     private void WinLevel(){
         gameOver = true;
+        audioManager.MusicPause();
+        audioManager.FXVictory();
         Debug.Log("You win :))))))))");
         if(firstStar && levelTimer >= oneStarTime){
             firstStar.color = Color.white;
