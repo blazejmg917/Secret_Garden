@@ -246,9 +246,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 0
-  id: Teal Bucket
+  id: Trowel
   identifiers:
-  - Bucket
+  - Trowel
 --- !u!58 &68861159
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2335,7 +2335,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1388487766}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1762717096}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: FXButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1388487766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3195,6 +3207,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b6e87a26dae5e14cb070c162cbeb132, type: 3}
+--- !u!114 &1762717096 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4698726713693652191, guid: 6b6e87a26dae5e14cb070c162cbeb132, type: 3}
+  m_PrefabInstance: {fileID: 1762717095}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6a205be5d2db249898e9c00a32b2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1816504535
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,7 +3275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3/20
+  m_text: 3/19
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3376,7 +3399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 0
-  id: Blue Shears
+  id: Shears
   identifiers:
   - Shears
   - Scissors
